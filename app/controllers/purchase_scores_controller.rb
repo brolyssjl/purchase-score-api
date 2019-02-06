@@ -16,8 +16,8 @@ class PurchaseScoresController < ApplicationController
   end
 
   def delete
-    @purchase_score.destroy
-    head :no_content
+    @purchase_score.update(deleted: true)
+    json_response @purchase_score
   end
 
   private

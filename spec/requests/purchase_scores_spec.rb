@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'PurchaseScores API', type: :request do
   # initialize test data
-  let!(:id) { 1 }
+  let(:id) { 1 }
   before(:all) do
     Rails.application.load_seed
   end
@@ -103,8 +103,14 @@ RSpec.describe 'PurchaseScores API', type: :request do
   describe 'DELETE /purchasescores/:id' do
     before { delete "/purchasescores/#{id}" }
 
-    it 'returns status code 204' do
-      expect(response).to have_http_status(204)
+    it 'updates the record' do
+      purchase_score = JSON.parse(response.body)
+
+      expect(purchase_score['deleted']).to eq(true)
+    end
+
+    it 'returns status code 200' do
+      expect(response).to have_http_status(200)
     end
   end
 
