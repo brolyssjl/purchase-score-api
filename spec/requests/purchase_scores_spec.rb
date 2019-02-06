@@ -2,20 +2,20 @@ require 'rails_helper'
 
 RSpec.describe 'PurchaseScores API', type: :request do
   # initialize test data
+  let!(:id) { 1 }
   before(:all) do
     Rails.application.load_seed
   end
-  let(:purchase_id) { 1 }
 
-  # Test suite for GET /purchasescores/:purchase_id
-  describe 'GET /purchasescores/:purchase_id' do
-    before { get "/purchasescores/#{purchase_id}" }
+  # Test suite for GET /purchasescores/:id
+  describe 'GET /purchasescores/:id' do
+    before { get "/purchasescores/#{id}" }
 
     context 'when the record exists' do
       it 'returns the purchase score' do
         expect(response.body).not_to be_empty
         purchase_score = JSON.parse(response.body)
-        expect(purchase_score['id']).to eq(purchase_id)
+        expect(purchase_score['id']).to eq(id)
       end
 
       it 'returns status code 200' do
@@ -24,7 +24,7 @@ RSpec.describe 'PurchaseScores API', type: :request do
     end
 
     context 'when the record does not exist' do
-      let(:purchase_id) { 100 }
+      let(:id) { 100 }
 
       it 'returns status code 404' do
         expect(response).to have_http_status(404)
@@ -76,6 +76,35 @@ RSpec.describe 'PurchaseScores API', type: :request do
         expect(response.body)
           .to match(/Validation failed: Score can't be blank, Score is not a number, Description can't be blank, User can't be blank, Shop can't be blank, Purchase can't be blank/)
       end
+    end
+  end
+
+  # Test suite for PUT /purchasescores/:id
+  describe 'PUT /purchasescores/:id' do
+    let(:valid_attributes) { { score: 3, description: 'Excelente producto, pero la atención fue muy mala' } }
+
+    context 'when the record exists' do
+      before { put "/purchasescores/#{id}", params: valid_attributes }
+
+      it 'updates the record' do
+        purchase_score = JSON.parse(response.body)
+
+        expect(purchase_score['score']).to eq(3)
+        expect(purchase_score['description']).to eq('Excelente producto, pero la atención fue muy mala')
+      end
+
+      it 'returns status code 200' do
+        expect(response).to have_http_status(200)
+      end
+    end
+  end
+
+  # Test suite for DELETE /purchasescores/:id
+  describe 'DELETE /purchasescores/:id' do
+    before { delete "/purchasescores/#{id}" }
+
+    it 'returns status code 204' do
+      expect(response).to have_http_status(204)
     end
   end
 
