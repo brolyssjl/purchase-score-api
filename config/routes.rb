@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  get 'purchasescores/:id', action: :show, controller: 'purchase_scores'
-  post 'purchasescores', action: :create, controller: 'purchase_scores'
-  put 'purchasescores/:id', action: :update, controller: 'purchase_scores'
-  delete 'purchasescores/:id', action: :delete, controller: 'purchase_scores'
+  get 'scores/:id', action: :show, controller: 'scores'
+  post 'scores', action: :create, controller: 'scores'
+  put 'scores/:id', action: :update, controller: 'scores'
+  delete 'scores/:id', action: :delete, controller: 'scores'
 end
