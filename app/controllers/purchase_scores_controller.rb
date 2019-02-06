@@ -1,0 +1,3 @@
+class PurchaseScoresController < ApplicationController
+
+end
