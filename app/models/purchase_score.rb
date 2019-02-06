@@ -1,0 +1,2 @@
+class PurchaseScore < ApplicationRecord
+end
