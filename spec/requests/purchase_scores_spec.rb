@@ -35,4 +35,48 @@ RSpec.describe 'PurchaseScores API', type: :request do
       end
     end
   end
+
+  # Test suite for POST /purchasescores
+  describe 'POST /purchasescores' do
+    # valid payload
+    let(:valid_attributes) { {
+        score: 5,
+        description: 'Excelente calidad del producto!!!',
+        user_id: 5,
+        shop_id: 7,
+        purchase_id: 11
+    } }
+
+    context 'when the request is valid' do
+      before { post '/purchasescores', params: valid_attributes }
+
+      it 'creates a purchase score' do
+        purchase_score = JSON.parse(response.body)
+
+        expect(purchase_score['score']).to eq(5)
+        expect(purchase_score['description']).to eq('Excelente calidad del producto!!!')
+        expect(purchase_score['user_id']).to eq(5)
+        expect(purchase_score['shop_id']).to eq(7)
+        expect(purchase_score['purchase_id']).to eq(11)
+      end
+
+      it 'returns status code 201' do
+        expect(response).to have_http_status(201)
+      end
+    end
+
+    context 'when the request is invalid' do
+      before { post '/purchasescores', params: { description: '' } }
+
+      it 'returns status code 422' do
+        expect(response).to have_http_status(422)
+      end
+
+      it 'returns a validation failure message' do
+        expect(response.body)
+          .to match(/Validation failed: Score can't be blank, Score is not a number, Description can't be blank, User can't be blank, Shop can't be blank, Purchase can't be blank/)
+      end
+    end
+  end
+
 end
