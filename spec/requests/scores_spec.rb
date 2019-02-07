@@ -44,7 +44,7 @@ RSpec.describe 'Scores API', type: :request do
         description: 'Excelente calidad del producto!!!',
         user_id: 5,
         shop_id: 7,
-        purchase_id: 11
+        purchase_id: 31
     } }
 
     context 'when the request is valid' do
@@ -57,7 +57,7 @@ RSpec.describe 'Scores API', type: :request do
         expect(purchase_score['description']).to eq('Excelente calidad del producto!!!')
         expect(purchase_score['user_id']).to eq(5)
         expect(purchase_score['shop_id']).to eq(7)
-        expect(purchase_score['purchase_id']).to eq(11)
+        expect(purchase_score['purchase_id']).to eq(31)
       end
 
       it 'returns status code 201' do
