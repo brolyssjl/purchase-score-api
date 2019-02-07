@@ -14,6 +14,34 @@ require 'faker'
     deleted: Faker::Boolean.boolean(0.5),
     user_id: Faker::Number.between(1, 10),
     shop_id: Faker::Number.between(1, 10),
-    purchase_id: Faker::Number.between(1, 10)
+    purchase_id: Faker::Number.between(1, 10),
+    created_at: Faker::Time.between(DateTime.now - 1, DateTime.now),
+    updated_at: Faker::Time.between(DateTime.now - 1, DateTime.now)
+  )
+end
+
+5.times do
+  PurchaseScore.create(
+    score: Faker::Number.between(1, 5),
+    description: Faker::Lorem.paragraph,
+    deleted: Faker::Boolean.boolean(0.5),
+    user_id: 12,
+    shop_id: Faker::Number.between(1, 10),
+    purchase_id: Faker::Number.between(11, 20),
+    created_at: Faker::Time.between(DateTime.now - 1, DateTime.now),
+    updated_at: Faker::Time.between(DateTime.now - 1, DateTime.now)
+  )
+end
+
+5.times do
+  PurchaseScore.create(
+    score: Faker::Number.between(1, 5),
+    description: Faker::Lorem.paragraph,
+    deleted: Faker::Boolean.boolean(0.5),
+    user_id: Faker::Number.between(1, 10),
+    shop_id: 13,
+    purchase_id: Faker::Number.between(21, 30),
+    created_at: Faker::Time.between(DateTime.now - 1, DateTime.now),
+    updated_at: Faker::Time.between(DateTime.now - 1, DateTime.now)
   )
 end
